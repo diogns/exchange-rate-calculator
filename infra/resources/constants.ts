@@ -33,152 +33,65 @@ export class Constants {
     };
   }
 
-  static get userTable() {
+  static get pairTable() {
     return {
-      name: `notification-user-table-${this.stack}`,
+      name: `exchage-rate-calculator-pair-table-${this.stack}`,
       attributes: [
         {
-          name: 'userName',
+          name: 'pair',
           type: 'S', // string
         },
-        {
-          name: 'notificationId',
-          type: 'S', // string
-        },
-        {
-          name: 'userNameAndDisplayStatus',
-          type: 'S',
-        },
+        // {
+        //   name: 'value',
+        //   type: 'N', // string
+        // },
       ],
       billingMode: 'PAY_PER_REQUEST',
-      hashKey: 'userName',
-      rangeKey: 'notificationId',
-      ttl: {
-        attributeName: 'exp',
-        enabled: true,
-      },
-      globalSecondaryIndexes: [
-        {
-          hashKey: 'userNameAndDisplayStatus',
-          rangeKey: 'notificationId',
-          name: 'userNameAndDisplayStatusIndex',
-          projectionType: 'ALL',
-        },
-      ],
-    };
-  }
-
-  static get userGroupTable() {
-    return {
-      name: `notification-user-group-table-${this.stack}`,
-      attributes: [
-        {
-          name: 'userName',
-          type: this.attributeDataType.String,
-        },
-        {
-          name: 'userGroup',
-          type: this.attributeDataType.String,
-        },
-      ],
-      billingMode: 'PAY_PER_REQUEST',
-      hashKey: 'userGroup',
-      rangeKey: 'userName',
+      hashKey: 'pair',
+      // rangeKey: 'notificationId',
       ttl: {
         attributeName: 'exp',
         enabled: true,
       },
       // globalSecondaryIndexes: [
       //   {
-      //     hashKey: "userNameAndDisplayStatus",
-      //     rangeKey: "notificationId",
-      //     name: "userNameAndDisplayStatusIndex",
-      //     projectionType: "ALL",
+      //     hashKey: 'userNameAndDisplayStatus',
+      //     rangeKey: 'notificationId',
+      //     name: 'userNameAndDisplayStatusIndex',
+      //     projectionType: 'ALL',
       //   },
-      // ]
+      // ],
     };
   }
 
-  static get notificationTable() {
+  static get userTable() {
     return {
-      name: `notification-table-${this.stack}`,
+      name: `exchage-rate-calculator-user-table-${this.stack}`,
       attributes: [
         {
-          name: 'id',
-          type: this.attributeDataType.String,
+          name: 'user',
+          type: 'S', // string
         },
-        {
-          name: 'userGroup',
-          type: this.attributeDataType.String,
-        },
+        //{
+        //  name: 'value',
+        //  type: 'N', // string
+        //},
       ],
       billingMode: 'PAY_PER_REQUEST',
-      hashKey: 'userGroup',
+      hashKey: 'user',
+      // rangeKey: 'notificationId',
       ttl: {
         attributeName: 'exp',
         enabled: true,
       },
-      rangeKey: 'id',
-    };
-  }
-
-  static get websocketConnectionTable() {
-    return {
-      name: `notification-websocket-connection-table-${this.stack}`,
-      attributes: [
-        {
-          name: 'connectionId',
-          type: this.attributeDataType.String,
-        },
-        {
-          name: 'userGroup',
-          type: this.attributeDataType.String,
-        },
-      ],
-      billingMode: 'PAY_PER_REQUEST',
-      hashKey: 'userGroup',
-      ttl: {
-        attributeName: 'exp',
-        enabled: true,
-      },
-      rangeKey: 'connectionId',
-      globalSecondaryIndexes: [
-        {
-          hashKey: 'connectionId',
-          name: 'connectionIdIndex',
-          projectionType: 'ALL',
-        },
-      ],
-    };
-  }
-
-  static get webpushConnectionTable() {
-    return {
-      name: `notification-webpush-connection-table-${this.stack}`,
-      attributes: [
-        {
-          name: 'publicKey',
-          type: this.attributeDataType.String,
-        },
-        {
-          name: 'userGroup',
-          type: this.attributeDataType.String,
-        },
-      ],
-      billingMode: 'PAY_PER_REQUEST',
-      hashKey: 'userGroup',
-      ttl: {
-        attributeName: 'exp',
-        enabled: true,
-      },
-      rangeKey: 'publicKey',
-      globalSecondaryIndexes: [
-        {
-          hashKey: 'publicKey',
-          name: 'publicKeyIndex',
-          projectionType: 'ALL',
-        },
-      ],
+      // globalSecondaryIndexes: [
+      //   {
+      //     hashKey: 'userNameAndDisplayStatus',
+      //     rangeKey: 'notificationId',
+      //     name: 'userNameAndDisplayStatusIndex',
+      //     projectionType: 'ALL',
+      //   },
+      // ],
     };
   }
 }

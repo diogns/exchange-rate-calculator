@@ -14,7 +14,7 @@ export function getProvider() {
   if (provider) return provider;
 
   provider =
-    stack === 'sandbox'
+    stack === 'dev'
       ? new aws.Provider(providerName, {
           region,
         })

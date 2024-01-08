@@ -1,3 +1,3 @@
-name: template-ms
+name: exchange-rate-calculator
 runtime: nodejs
-description: A minimal AWS TypeScript Pulumi template-ms
+description: A minimal AWS TypeScript Pulumi exchange-rate-calculator

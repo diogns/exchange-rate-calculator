@@ -1,7 +1,5 @@
 import { Logger, Module } from '@nestjs/common';
-import {
-  PairQueriesImplement,
-} from '../repositories/pair';
+import { PairQueriesImplement } from '../repositories/pair';
 import { CqrsModule } from '@nestjs/cqrs';
 
 import { CalculateController } from '../../interfaces/http/v1/calculate/calculate.controller';
@@ -37,7 +35,6 @@ const application = [
   // ListPairsHandler,
   // GetPairHandler,
   // AddPairHandler,
-  // UpdatePairHandler,
   // UpdatePairHandler,
   // RemovePairHandler,
 ];

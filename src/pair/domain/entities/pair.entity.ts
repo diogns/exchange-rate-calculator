@@ -1,12 +1,9 @@
 export class PairEntity {
   pair: string;
-  convertion: number;
+  value: number;
 
-  constructor(
-    pair: string,
-    convertion: number,
-  ) {
+  constructor(pair: string, value: number) {
     this.pair = pair;
-    this.convertion = convertion;
+    this.value = value;
   }
 }

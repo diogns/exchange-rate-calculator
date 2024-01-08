@@ -1,10 +1,10 @@
 import { NotFoundException } from '@nestjs/common';
 
-export class UserNotFoundException extends NotFoundException {
+export class PairNotFoundException extends NotFoundException {
   constructor() {
-    super(UserNotFoundException.getMessage());
+    super(PairNotFoundException.getMessage());
   }
   static getMessage() {
-    return 'User was not found in database';
+    return 'Pair was not found in database';
   }
 }

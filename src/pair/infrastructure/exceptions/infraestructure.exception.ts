@@ -5,7 +5,7 @@ export enum InfrastructureExceptionCode {
   UpdatePairDatabaseExceptionCode = 'UPDATE_PAIR_DATABASE_EXCEPTION',
   RemovePairDatabaseExceptionCode = 'REMOVE_PAIR_DATABASE_EXCEPTION',
   GetPairDatabaseExceptionCode = 'GET_PAIR_DATABASE_EXCEPTION',
-  CalculateDatabaseExceptionCode = 'CALCULATE_DATABASE_EXCEPTION'
+  CalculateDatabaseExceptionCode = 'CALCULATE_DATABASE_EXCEPTION',
 }
 
 export abstract class InfrastructureException extends Error {

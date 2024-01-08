@@ -8,20 +8,20 @@ import {
 } from '@nestjs/swagger';
 import { ResponseDescription } from '../response-description';
 import { GeneralResponse } from '../../general.response';
-import { CalculateQuery } from '@pair/application/queries/calculate';
-import { CalculateResponseDTO } from './dto/calculate.response';
-import { CalculateRequestDTO } from './dto/calculate.request';
+import { AddPairQuery } from '@pair/application/queries/add-pair';
+import { AddPairRequestDTO } from './dto/add-pair.request';
+import { AddPairResponseDTO } from './dto/add-pair.response';
 
 @ApiTags('Pair')
 @Controller('pair')
-export class CalculateController {
+export class AddPairController {
   constructor(readonly queryBus: QueryBus) {}
 
   @Version('1')
-  @Post('convert')
+  @Post()
   @ApiCreatedResponse({
     description: ResponseDescription.OK,
-    type: CalculateResponseDTO,
+    type: AddPairResponseDTO,
   })
   @ApiBadRequestResponse({
     description: ResponseDescription.BAD_REQUEST,
@@ -31,12 +31,8 @@ export class CalculateController {
     description: ResponseDescription.INTERNAL_SERVER_ERROR,
     type: GeneralResponse,
   })
-  async addUser(@Body() body: CalculateRequestDTO) {
-    const query = new CalculateQuery(
-      body.monto,
-      body.moneda_origen,
-      body.moneda_destino,
-    );
+  async addUser(@Body() body: AddPairRequestDTO) {
+    const query = new AddPairQuery(body.pair, body.value);
     return this.queryBus.execute(query);
   }
 }

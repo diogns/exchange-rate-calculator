@@ -9,7 +9,6 @@ export class CalculateResponseDTO {
   @IsNumber()
   @ApiProperty({ description: 'monto con tipo de cambio' })
   monto_con_tipo_de_cambio: number;
-  
 
   @IsString()
   @IsNotEmpty()
@@ -27,12 +26,12 @@ export class CalculateResponseDTO {
   tipo_de_cambio: string;
 
   constructor(
-    monto: number, 
+    monto: number,
     monto_con_tipo_de_cambio: number,
     moneda_origen: string,
     moneda_destino: string,
     tipo_de_cambio: string,
-    ) {
+  ) {
     this.monto = monto;
     this.monto_con_tipo_de_cambio = monto_con_tipo_de_cambio;
     this.moneda_origen = moneda_origen;

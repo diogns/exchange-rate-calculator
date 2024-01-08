@@ -4,6 +4,7 @@ import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
 import { err, ok } from 'neverthrow';
 
 import { PairEntity } from '@pair/domain/entities/pair.entity';
+import { PairInputEntity } from '@pair/domain/entities/pair-input.entity';
 import {
   AddPairResult,
   GetPairResult,
@@ -19,9 +20,8 @@ import {
   UpdatePairDatabaseException,
   GetPairDatabaseException,
 } from '../exceptions/pair.exception';
-import Constants from '../../../shared/constants';
 
-let pairDataBase: PairEntity[] = [];
+import Constants from '../../../shared/constants';
 
 export class PairQueriesImplement implements PairQueriesRepository {
   @Inject()
@@ -48,16 +48,29 @@ export class PairQueriesImplement implements PairQueriesRepository {
 
   async listPairs(): Promise<ListPairsResult> {
     try {
-      return ok(pairDataBase);
+      const result = await this.dynamoDBDocument.query({
+        TableName: Constants.pairsTable,
+      });
+
+      const pair = result.Items as PairEntity[];
+      return ok(pair);
     } catch (error) {
       this.logger.error(error, 'PairQueriesImplement.listPairs');
       return err(new ListPairsDatabaseException());
     }
   }
 
-  async getPair(pairCode: any): Promise<GetPairResult> {
+  async getPair(input: PairInputEntity): Promise<GetPairResult> {
     try {
-      const pair: any = {};
+      const result = await this.dynamoDBDocument.query({
+        TableName: Constants.pairsTable,
+        ExpressionAttributeValues: {
+          ':pair': `${input.monedaOrigen}-${input.monedaDestino}`,
+        },
+        KeyConditionExpression: 'pair = :pair',
+      });
+
+      const pair = result.Items[0] as PairEntity;
       return ok(pair);
     } catch (error) {
       this.logger.error(error, 'PairQueriesImplement.listPairs');
@@ -67,6 +80,13 @@ export class PairQueriesImplement implements PairQueriesRepository {
 
   async addPair(pair: PairEntity): Promise<AddPairResult> {
     try {
+      this.dynamoDBDocument.put({
+        TableName: Constants.pairsTable,
+        Item: {
+          pair: pair.pair,
+          value: pair.value,
+        },
+      });
       return ok(true);
     } catch (error) {
       this.logger.error(error, 'PairQueriesImplement.addPair');
@@ -76,6 +96,17 @@ export class PairQueriesImplement implements PairQueriesRepository {
 
   async updatePair(pair: PairEntity): Promise<UpdatePairResult> {
     try {
+      await this.dynamoDBDocument.update({
+        TableName: Constants.pairsTable,
+        Key: {
+          pair: pair.pair,
+        },
+        UpdateExpression: 'set value = :value',
+        ExpressionAttributeValues: {
+          ':value': pair.value,
+        },
+        ConditionExpression: 'attribute_exists (pair)',
+      });
       return ok(true);
     } catch (error) {
       this.logger.error(error, 'PairQueriesImplement.listPairs');
@@ -83,14 +114,18 @@ export class PairQueriesImplement implements PairQueriesRepository {
     }
   }
 
-  async calculate(input: {
-    monto: number,
-    monedaOrigen: string,
-    monedaDestino: string,
-  }): Promise<CalculateResult> {
+  async calculate(
+    input: PairInputEntity,
+    pair: PairEntity,
+  ): Promise<CalculateResult> {
     try {
-      console.log(input.monto)
-      return ok({});
+      return ok({
+        monto: input.monto,
+        montoConTipoDeCambio: pair.value * input.monto,
+        monedaOrigen: input.monedaOrigen,
+        monedaDestino: input.monedaDestino,
+        tipoDeCambio: pair.pair,
+      });
     } catch (error) {
       this.logger.error(error, 'PairQueriesImplement.calculate');
       return err(new CalculateDatabaseException());

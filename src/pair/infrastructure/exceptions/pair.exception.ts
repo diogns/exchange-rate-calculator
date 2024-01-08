@@ -40,8 +40,7 @@ export class UpdatePairDatabaseException extends InfrastructureException {
   code: string;
   constructor() {
     super(UpdatePairDatabaseException.getMessage());
-    this.code =
-      InfrastructureExceptionCode.UpdatePairDatabaseExceptionCode;
+    this.code = InfrastructureExceptionCode.UpdatePairDatabaseExceptionCode;
   }
   static getMessage(): string {
     return 'There was an error in the database when update pair';

@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Version } from '@nestjs/common';
+import { Body, Controller, Patch, Version } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiBadRequestResponse,
@@ -8,20 +8,20 @@ import {
 } from '@nestjs/swagger';
 import { ResponseDescription } from '../response-description';
 import { GeneralResponse } from '../../general.response';
-import { CalculateQuery } from '@pair/application/queries/calculate';
-import { CalculateResponseDTO } from './dto/calculate.response';
-import { CalculateRequestDTO } from './dto/calculate.request';
+import { UpdatePairQuery } from '@pair/application/queries/update-pair';
+import { UpdatePairRequestDTO } from './dto/update-pair.request';
+import { UpdatePairResponseDTO } from './dto/update-pair.response';
 
 @ApiTags('Pair')
 @Controller('pair')
-export class CalculateController {
+export class UpdatePairController {
   constructor(readonly queryBus: QueryBus) {}
 
   @Version('1')
-  @Post('convert')
+  @Patch()
   @ApiCreatedResponse({
     description: ResponseDescription.OK,
-    type: CalculateResponseDTO,
+    type: UpdatePairResponseDTO,
   })
   @ApiBadRequestResponse({
     description: ResponseDescription.BAD_REQUEST,
@@ -31,12 +31,8 @@ export class CalculateController {
     description: ResponseDescription.INTERNAL_SERVER_ERROR,
     type: GeneralResponse,
   })
-  async addUser(@Body() body: CalculateRequestDTO) {
-    const query = new CalculateQuery(
-      body.monto,
-      body.moneda_origen,
-      body.moneda_destino,
-    );
+  async updateUser(@Body() body: UpdatePairRequestDTO) {
+    const query = new UpdatePairQuery(body.pair, body.value);
     return this.queryBus.execute(query);
   }
 }
