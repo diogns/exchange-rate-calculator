@@ -1,15 +1,20 @@
 import { NestFactory } from '@nestjs/core';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
+
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
+
 import {
   INestApplication,
   Logger,
   ValidationPipe,
   VersioningType,
 } from '@nestjs/common';
-import { initializeTracing } from './config/open-telemetry/tracer';
 
-initializeTracing();
 
 function enableSwagger(
   app: INestApplication<any>,
@@ -31,12 +36,15 @@ function enableSwagger(
 }
 
 async function bootstrap() {
-  const globalPrefix = process.env.APP_PREFIX || 'template-ms';
+  const globalPrefix = process.env.APP_PREFIX || 'exchange-rate-calculator';
   const folderSwagger = process.env.APP_SWAGGER || 'docs';
   const port = process.env.PORT || 3000;
   const logger = new Logger();
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter()
+  );
 
   app.enableVersioning({
     type: VersioningType.URI,
@@ -50,7 +58,7 @@ async function bootstrap() {
 
   enableSwagger(app, globalPrefix, folderSwagger);
 
-  await app.listen(port);
+  await app.listen(3000, '0.0.0.0');
 
   logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`,
