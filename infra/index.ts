@@ -20,3 +20,23 @@ export const taskDefinitionArn = taskDefinition.arn;
 export const serviceName = service.name;
 export const ecsClusterArn = cluster.arn;
 export const apiUri = apigtw.apiEndpoint;
+
+import {
+  createUserTable,
+  createUserGroupTable,
+  createNotificationTable,
+  createWebsocketConnectionTable,
+  createWebpushConnectionTable,
+} from './resources/dynamodb';
+
+const userTable = createUserTable();
+const userGroupTable = createUserGroupTable();
+const notificationTable = createNotificationTable();
+const websocketConnectionTable = createWebsocketConnectionTable();
+const webpushConnectionTable = createWebpushConnectionTable();
+
+export const userTableArn = userTable.arn;
+export const userGroupTableArn = userGroupTable.arn;
+export const notificationTableArn = notificationTable.arn;
+export const websocketConnectionTableArn = websocketConnectionTable.arn;
+export const webpushConnectionTableArn = webpushConnectionTable.arn;
