@@ -4,11 +4,11 @@ import { IsNumber, IsNotEmpty, IsString, MinLength } from 'class-validator';
 export class AddPairRequestDTO {
   @IsNumber()
   @ApiProperty({ description: 'par' })
-  pair: number;
+  value: number;
 
   @IsString()
   @IsNotEmpty()
   @MinLength(1)
   @ApiProperty({ description: 'valor' })
-  value: string;
+  pair: string;
 }

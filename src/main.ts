@@ -7,14 +7,12 @@ import {
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-
 import {
   INestApplication,
   Logger,
   ValidationPipe,
   VersioningType,
 } from '@nestjs/common';
-
 
 function enableSwagger(
   app: INestApplication<any>,
@@ -24,7 +22,7 @@ function enableSwagger(
   const config = new DocumentBuilder()
     .setTitle(globalPrefix)
     .setDescription(
-      process.env.APP_DESCRIPTION || 'Auna microservices template project',
+      process.env.APP_DESCRIPTION || 'exchange-rate-calculator project',
     )
     .setVersion(process.env.APP_VERSION || '1.0.0')
     .build();
@@ -43,7 +41,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter()
+    new FastifyAdapter(),
   );
 
   app.enableVersioning({

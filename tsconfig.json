@@ -11,6 +11,11 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
+      "@user/application/*": ["src/user/application/*"],
+      "@user/domain/*": ["src/user/domain/*"],
+      "@user/infrastructure/*": ["src/user/infrastructure/*"],
+      "@user/interfaces/*": ["src/user/interfaces/*"],
+
       "@pair/application/*": ["src/pair/application/*"],
       "@pair/domain/*": ["src/pair/domain/*"],
       "@pair/infrastructure/*": ["src/pair/infrastructure/*"],

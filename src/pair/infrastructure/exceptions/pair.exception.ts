@@ -47,21 +47,10 @@ export class UpdatePairDatabaseException extends InfrastructureException {
   }
 }
 
-export class RemovePairDatabaseException extends InfrastructureException {
-  code: string;
-  constructor() {
-    super(RemovePairDatabaseException.getMessage());
-    this.code = InfrastructureExceptionCode.RemovePairDatabaseExceptionCode;
-  }
-  static getMessage(): string {
-    return 'There was an error in the database when remove pair';
-  }
-}
-
 export class CalculateDatabaseException extends InfrastructureException {
   code: string;
   constructor() {
-    super(RemovePairDatabaseException.getMessage());
+    super(CalculateDatabaseException.getMessage());
     this.code = InfrastructureExceptionCode.CalculateDatabaseExceptionCode;
   }
   static getMessage(): string {

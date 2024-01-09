@@ -101,9 +101,12 @@ export class PairQueriesImplement implements PairQueriesRepository {
         Key: {
           pair: pair.pair,
         },
-        UpdateExpression: 'set value = :value',
+        UpdateExpression: 'set #newValue = :newValue',
+        ExpressionAttributeNames: {
+          '#newValue': 'value',
+        },
         ExpressionAttributeValues: {
-          ':value': pair.value,
+          ':newValue': pair.value,
         },
         ConditionExpression: 'attribute_exists (pair)',
       });
