@@ -6,7 +6,6 @@ import { AuthModule } from './auth/auth.module';
 
 import { TerminusModule } from '@nestjs/terminus';
 import { HttpModule } from '@nestjs/axios';
-import { HealthController } from './healthcheck.controller';
 
 @Module({
   imports: [
@@ -17,7 +16,7 @@ import { HealthController } from './healthcheck.controller';
     HttpModule,
     ConfigModule.forRoot(),
   ],
-  controllers: [HealthController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}
