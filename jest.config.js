@@ -3,16 +3,16 @@ const coverageThreshold = require('./jest.config.base.js');
 
 module.exports = {
   collectCoverageFrom: [
-    'src/user/application/**/*.(t|j)s',
-    'src/user/domain/**/*.(t|j)s',
+    'src/pair/application/**/*.(t|j)s',
+    'src/pair/domain/**/*.(t|j)s',
   ],
   coverageDirectory: 'reports/coverage-result/unit',
   modulePaths: ['<rootDir>'],
   moduleNameMapper: {
-    '@user/application/(.*)': '<rootDir>/src/user/application/$1',
-    '@user/domain/(.*)': '<rootDir>/src/user/domain/$1',
-    '@user/infrastructure/(.*)': '<rootDir>/src/user/infrastructure/$1',
-    '@user/interfaces/(.*)': '<rootDir>/src/user/interfaces/$1',
+    '@pair/application/(.*)': '<rootDir>/src/pair/application/$1',
+    '@pair/domain/(.*)': '<rootDir>/src/pair/domain/$1',
+    '@pair/infrastructure/(.*)': '<rootDir>/src/pair/infrastructure/$1',
+    '@pair/interfaces/(.*)': '<rootDir>/src/pair/interfaces/$1',
     '#node-web-compat': './node-web-compat-node.js',
   },
   moduleFileExtensions: ['js', 'json', 'ts'],

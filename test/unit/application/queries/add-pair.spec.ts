@@ -1,6 +1,6 @@
 import { InternalServerErrorException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AddPairHandler } from '@pair/application/queries/add-pair';
+import { AddPairHandler, AddPairQuery } from '@pair/application/queries/add-pair';
 import { PairEntity } from '@pair/domain/entities/pair.entity';
 import { PairQueriesRepository } from '@pair/domain/repositories/pair';
 import { AddPairDatabaseException } from '@pair/infrastructure/exceptions/pair.exception';
@@ -10,7 +10,7 @@ import { err, ok } from 'neverthrow';
 
 let moduleRef: TestingModule;
 let addPairHandler: AddPairHandler;
-let pairCommand: PairQueriesRepository;
+let pairQuery: PairQueriesRepository;
 
 describe('AddPairHandler.execute', () => {
   beforeAll(async () => {
@@ -21,7 +21,7 @@ describe('AddPairHandler.execute', () => {
 
   beforeEach(async () => {
     addPairHandler = moduleRef.get<AddPairHandler>(AddPairHandler);
-    pairCommand = moduleRef.get<PairQueriesImplement>(PairQueriesImplement);
+    pairQuery = moduleRef.get<PairQueriesImplement>(PairQueriesImplement);
   });
 
   afterEach(async () => {
@@ -51,17 +51,17 @@ describe('AddPairHandler.execute', () => {
 
   it('should throw ok with AddPairResponseDTO when repository return success', async () => {
     // Arrange
-    jest.spyOn(pairQuerie, 'addPair').mockImplementation(async () => {
-      return ok(new PairEntity(1, '', '', ''));
+    jest.spyOn(pairQuery, 'addPair').mockImplementation(async () => {
+      return ok(true);
     });
 
     //Act
-    const command = new AddPairCommand('', '', '');
+    const command = new AddPairQuery(0, '');
     const response = await addPairHandler.execute(command);
-
+    console.log(response);
     // Assert
     expect(response).not.toBeNull();
-    expect(response.success).toBe(true);
+    expect(response).toBe(true);
     expect(Object.keys(response.pair)).toEqual(
       expect.arrayContaining([
         'pair_code',
